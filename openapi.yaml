@@ -1,0 +1,57 @@
+openapi: "3.0.3"
+info:
+  title: "Minha API"
+  version: "1.0.0"
+  description: "Meu primeiro CI/CD"
+servers:
+  - url: "https://api.exemplo.com/v1"
+    description: "Produção"
+paths:
+  /tarefas:
+    get:
+      summary: "Listar tarefas"
+      operationId: "listTasks"
+      tags: ["Tarefas"]
+      responses:
+        "200":
+          description: "Lista de tarefas"
+    post:
+      summary: "Criar tarefa"
+      operationId: "createTask"
+      tags: ["Tarefas"]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/NovaTarefa"
+      responses:
+        "201":
+          description: "Tarefa criada"
+        "400":
+          description: "Dados inválidos"
+  /tarefas/{id}:
+    get:
+      summary: "Buscar tarefa"
+      operationId: "getTask"
+      tags: ["Tarefas"]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Encontrada"
+        "404":
+          description: "Não encontrada"
+components:
+  schemas:
+    NovaTarefa:
+      type: object
+      required: [titulo]
+      properties:
+        titulo:
+          type: string
+          example: "Minha primeira tarefa"
